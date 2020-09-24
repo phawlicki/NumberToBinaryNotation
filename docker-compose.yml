@@ -1,0 +1,23 @@
+version: '2.4'
+services:
+  binarycalculator:
+    build: ./binarycalculator
+    depends_on:
+      - discoveryserver
+      - configserver
+    environment:
+      WAIT_HOSTS: "configserver:9090, discoveryserver:9091"
+    ports:
+      - "8085:8085"
+    restart: always
+  configserver:
+    build: ./configserver
+    depends_on:
+      - discoveryserver
+    ports:
+      - "9090:9090"
+  discoveryserver:
+    build: ./discoveryserver
+    ports:
+      - "9091:9091"
+version: "2.4"
